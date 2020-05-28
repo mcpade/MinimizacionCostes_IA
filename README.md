@@ -51,4 +51,3 @@ Supuesto 2: la energía gastada por un sistema (nuestra IA o el sistema de enfri
 
 
 
-
