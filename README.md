@@ -237,3 +237,15 @@ Este sería el resultado en test:
 
 Se puede ver que el resultado es parecido al que conseguimos la fórmula anterior, un ahorro de un **55%**
 
+#### Dropout
+
+**training_earlystopping1_dropout.py**
+
+Voy a realizar una prueba con un segundo brain llamado **new_brain.py** donde se hace uso de la técnica **Dropout**. Utilizaré también la primera forma de parada temprana. El modelo que genero se llama **modelearlyst_dropout.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo.
+
+Este sería el resultado en test:
+
+
+
+
+
