@@ -101,5 +101,22 @@ Accion|¿Que hace?
 4     | La IA caliente el servidor 3 ∘C
 
 
+### Definición de las recompensas
+
+La recompensa en la iteración t es la energía gastada en el servidor que la IA está ahorrando con respecto al sistema de enfriamiento integrado del servidor, es decir, la diferencia entre la energía que gastaría el sistema de enfriamiento no inteligente si la IA fuera desactivada y la energía que la IA gasta en el servidor:
+
+Rewardt = Et no IA − Et IA
+
+Y como (Supuesto 2), la energía gastada es igual al cambio de temperatura causado en el servidor (por cualquier sistema, incluido el AI o el sistema de enfriamiento no inteligente):
+
+Reward t =|ΔT no IA | −|ΔTIA|
+
+donde:
+
+ΔT no IA es el cambio de temperatura que causaría el sistema de enfriamiento integrado del servidor sin la IA en el servidor durante la iteración t, es decir, del instante tal instante t+1
+
+ΔTAI es el cambio de temperatura causado por la IA en el servidor durante la iteración t, es decir, del instante tal instante t+1
+
+**Nota importante:** es importante comprender que los sistemas (nuestra IA y el sistema de enfriamiento del servidor) se evaluarán por separado para calcular las recompensas. Y dado que cada vez que sus acciones conducen a temperaturas diferentes, tendremos que realizar un seguimiento por separado de las dos temperaturas  TIA y T no IA.
 
 
