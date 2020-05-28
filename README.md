@@ -93,7 +93,13 @@ Por lo tanto, el estado de entrada será un vector de entrada de estos tres elem
 
 Las acciones son simplemente los cambios de temperatura que la IA puede causar dentro del servidor, para calentarlo o enfriarlo. Para que nuestras acciones sean discretas, consideraremos 5 posibles cambios de temperatura de  −3∘C a  +3∘C, para que terminemos con las 5 acciones posibles que la IA puede llevar a cabo para regular la temperatura del servidor:
 Accion|¿Que hace?
-------|----------
+------|---------------------------------
+0     | La IA enfría el servidor 3∘C
+1     | La IA enfría el servidor 1.5 ∘C
+2     | La IA no transfiere calor ni frio al servidor (sin cambio de temperatura
+3     | La IA calienta el servidor 1.5 ∘C
+4     | La IA caliente el servidor 3 ∘C
+
 
 
 
