@@ -159,4 +159,6 @@ Construiremos este cerebro artificial gracias a la biblioteca **Keras**. Desde e
 - 2-4: Ensamblar la arquitectura completa dentro de un modelo de Keras.
 - 2-5: Compilación del modelo con una función de pérdida de error cuadrático medio y el optimizador elegido.
 
+Se ha creado un segundo brain llamado **new_brain.py** donde se hace uso de la técnica **Dropout**. Es una técnica de regularización que evita el sobreajuste. Simplemente consiste en desactivar una cierta proporción de neuronas aleatorias durante cada paso de propagación hacia adelante y hacia atrás. De esa manera, no todas las neuronas aprenden de la misma manera, evitando así que la red neuronal sobreajuste los datos de entrenamiento.
+
 
