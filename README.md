@@ -142,3 +142,7 @@ En este primer paso, vamos a construir el entorno dentro de una clase. ¿Por qu�
 - 1-2: Hacer un método que actualice el entorno justo después de que la IA ejecute una acción.
 - 1-3: Hacer un método que restablezca el entorno.
 - 1-4: hacer un método que nos proporcione en cualquier momento el estado actual, la última recompensa obtenida y si el juego ha terminado.
+
+#### Paso 2: Contrucción del cerebro "brain.py"
+
+En este Paso 2, vamos a construir el cerebro artificial de nuestra IA, que no es más que una red neuronal completamente conectada
