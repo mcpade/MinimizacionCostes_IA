@@ -89,4 +89,11 @@ El estado de entrada st en el momento t se compone de los siguientes tres elemen
 
 Por lo tanto, el estado de entrada será un vector de entrada de estos tres elementos. Nuestra IA tomará este vector como entrada y devolverá la acción para ejecutar en cada instante t.
 
+### Definición de las acciones
+
+Las acciones son simplemente los cambios de temperatura que la IA puede causar dentro del servidor, para calentarlo o enfriarlo. Para que nuestras acciones sean discretas, consideraremos 5 posibles cambios de temperatura de  −3∘C a  +3∘C, para que terminemos con las 5 acciones posibles que la IA puede llevar a cabo para regular la temperatura del servidor:
+Accion|¿Que hace?
+------|----------
+
+
 
