@@ -71,9 +71,12 @@ t (cada minuto) es, de hecho, la diferencia en los cambios absolutos de temperat
 Energia ahorrada por la IA entre t y t+1=|ΔT Sistema de Enfriamiento Integrado del Servidor|−|ΔT IA| =|ΔTno IA|−|ΔTIA|
  
 donde:
+
 ΔTnoIA  es el cambio de temperatura que causaría el sistema de enfriamiento integrado del servidor sin la IA en el servidor durante la iteración t, es decir, del instante t al instante t+1
 
 ΔTAI    es el cambio de temperatura causado por la IA en el servidor durante la iteración t, es decir, del instante t al instante t+1
+
+Nuestro objetivo será ahorrar la energía máxima cada minuto, por lo tanto, ahorrar la energía total máxima durante 1 año completo de simulación y, finalmente, ahorrar los costos máximos en la factura de electricidad de refrigeración / calefacción.
 
 
 
