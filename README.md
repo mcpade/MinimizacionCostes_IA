@@ -184,7 +184,7 @@ En la fase de entrenamiento también exploramos un poco cuando llevamos a cabo l
 Después de ejecutar el código, ya vemos un buen rendimiento de nuestra IA durante el entrenamiento, gastando la mayor parte del tiempo menos energía que el sistema alternativo, es decir, el sistema de enfriamiento integrado del servidor. Pero ese es solo el entrenamiento, ahora necesitamos ver si también obtenemos un buen rendimiento en una nueva simulación de 1 año. Ahí es donde entra en juego nuestro próximo y último archivo de python.
 El modelo obtenido se ha guardado en **model.h5**
 
-![Brain](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/training.png)
+![Train](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/training.png)
 
 #### Paso 5: Probar la IA  "testing.py"
 
@@ -198,7 +198,7 @@ En términos de nuestro algoritmo de IA, aquí para la implementación de prueba
 - 5-4: Iniciación de la simulación de 1 año.
 - 5-5: En cada iteración (cada minuto), nuestra IA solo ejecuta la acción que resulta de su predicción, y no se lleva a cabo ninguna exploración o entrenamiento de Deep Q-Learning.
 
-![Brain](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTest.png)
+![Resultado](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTest.png)
 
 Se ve que se consigue un ahorro de energía del **49%**
 
@@ -209,8 +209,13 @@ El entrenamiento de soluciones de Inteligencia Artificial puede ser muy costoso,
 
 **training_earlystopping1.py**
 
-Forma número 1: Comprobando si la recompensa total acumulada durante todo el período de 5 meses (= 1 epoch de entrenamiento) sigue aumentando, después de un número determinado de epochs, (para nuestro ejemplo 10 épocas). En este caso el modelo generado es **modelearlyst.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo
+Forma número 1: Comprobando si la recompensa total acumulada durante todo el período de 5 meses (= 1 epoch de entrenamiento) sigue aumentando, después de un número determinado de epochs, (para nuestro ejemplo 10 épocas). En este caso el modelo generado es **modelearlyst.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo.
 
+![EarlyS1](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/trainingearlys1.png)
+
+Se puede ver que la parada se ha realizado en la época 30. No necesitaríamos por tanto entrenar hasta las 100 épocas
+
+Este sería el resultado en test:
 
 
 
