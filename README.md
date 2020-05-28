@@ -79,6 +79,14 @@ donde:
 
 Nuestro objetivo será ahorrar la energía máxima cada minuto, por lo tanto, ahorrar la energía total máxima durante 1 año completo de simulación y, finalmente, ahorrar los costos máximos en la factura de electricidad de refrigeración / calefacción.
 
+### Definición de los estados
 
+El estado de entrada st en el momento t se compone de los siguientes tres elementos:
+
+- La temperatura del servidor en el instante t.
+- El número de usuarios en el servidor en el instante t.
+- La velocidad de transmisión de datos en el servidor en el instante t.
+
+Por lo tanto, el estado de entrada será un vector de entrada de estos tres elementos. Nuestra IA tomará este vector como entrada y devolverá la acción para ejecutar en cada instante t.
 
 
