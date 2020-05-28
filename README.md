@@ -246,6 +246,9 @@ Dejando 10 épocas para la parada temprana ésta se produce en la época 23 y se
 
 Este sería el resultado en test:
 
+![TestEarlyS1Dropout](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTestEarlys1_Dropout.png)
+
+
 Consigo un 79% que es un resultado muy bueno de ahorro de energía.
 
 
