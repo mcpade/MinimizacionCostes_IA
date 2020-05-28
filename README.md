@@ -1,10 +1,9 @@
 # MinimizacionCostes_IA
 
-## Utilización de un modelo de IA DQN (Deep Q-Learning) para minimizar costes energéticos de un servidor
 ## Caso Práctico: Minimización de Costes en el Consumo Energético de un Centro de Datos
 
 ### Problema a resolver
-utilizando su modelo de IA DQN (Deep Q-Learning). En este caso práctico, haremos algo muy similar. 
+utilizando su modelo de **IA DQN (Deep Q-Learning)**. En este caso práctico, haremos algo muy similar. 
 Configurar el entorno de un servidor y construcción de una IA que controlará el enfriamiento / calentamiento del servidor 
 para que se mantenga en un rango óptimo de temperaturas mientras se ahorra la máxima energía, minimizando así los costes.
 
