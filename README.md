@@ -181,3 +181,5 @@ En la fase de entrenamiento también exploramos un poco cuando llevamos a cabo l
 - 4-5: Comenzar el entrenamiento con un bule for durante más de 100 epochs de períodos de 5 meses.
 - 4-6: Durante cada epoch, repetimos todo el proceso de Deep Q-Learning, al tiempo que exploramos el 30% de las veces.
 
+Después de ejecutar el código, ya vemos un buen rendimiento de nuestra IA durante el entrenamiento, gastando la mayor parte del tiempo menos energía que el sistema alternativo, es decir, el sistema de enfriamiento integrado del servidor. Pero ese es solo el entrenamiento, ahora necesitamos ver si también obtenemos un buen rendimiento en una nueva simulación de 1 año. Ahí es donde entra en juego nuestro próximo y último archivo de python.
+El modelo obtenido se ha guardado en **model.h5**
