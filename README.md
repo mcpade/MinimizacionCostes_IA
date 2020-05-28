@@ -217,6 +217,10 @@ Se puede ver que la parada se ha realizado en la época 30. No necesitaríamos p
 
 Este sería el resultado en test:
 
+![TestEarlyS1](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTestEarlys1.png)
+
+Se puede ver que el resultado es incluso mejor que el anterior y conseguimos un ahorro de un **57%**
+
 
 
 **training_earlystopping2.py**
