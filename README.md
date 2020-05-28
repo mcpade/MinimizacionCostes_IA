@@ -148,3 +148,15 @@ En este primer paso, vamos a construir el entorno dentro de una clase. ¿Por qu�
 En este Paso 2, vamos a construir el cerebro artificial de nuestra IA, que no es más que una red neuronal completamente conectada
 
 ![Brain](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/brain.png)
+
+Nuevamente, construiremos este cerebro artificial dentro de una clase, por la misma razón que antes, que nos permite crear varios cerebros artificiales para diferentes servidores dentro de un centro de datos. De hecho, tal vez algunos servidores necesitarán cerebros artificiales diferentes con hiperparámetros diferentes que otros servidores. Es por eso que gracias a esta estructura avanzada de python de clase / objeto, podemos cambiar fácilmente de un cerebro a otro para regular la temperatura de un nuevo servidor que requiere una IA con diferentes parámetros de redes neuronales.
+
+Construiremos este cerebro artificial gracias a la biblioteca **Keras**. Desde esta librería utilizaremos la clase Dense() para crear nuestras dos capas ocultas completamente conectadas, la primera con 64 neuronas ocultas y la segunda con 32 neuronas. Y luego, utilizaremos la clase Dense() nuevamente para devolver los valores Q, que tienen en cuenta las salidas de las redes neuronales artificiales. Luego, más adelante en el entrenamiento y los archivos de prueba, utilizaremos el método argmax para seleccionar la acción que tenga el valor Q máximo. Luego, ensamblamos todos los componentes del cerebro, incluidas las entradas y las salidas, creándolo como un objeto de la clase Model() (muy útil para luego guardar y cargar un modelo en producción con pesos específicos). Finalmente, lo compilaremos con una función de pérdidas que medirá el error cuadrático medio y el optimizador de Adam. 
+
+- 2-1: Construir la capa de entrada compuesta de los estados de entrada.
+- 2-2: Construir las capas ocultas con un número elegido de estas capas y neuronas dentro de cada una, completamente conectadas a la capa de entrada y entre ellas.
+- 2-3: Construir la capa de salida, completamente conectada a la última capa oculta.
+- 2-4: Ensamblar la arquitectura completa dentro de un modelo de Keras.
+- 2-5: Compilación del modelo con una función de pérdida de error cuadrático medio y el optimizador elegido.
+
+
