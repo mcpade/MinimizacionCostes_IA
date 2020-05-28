@@ -227,4 +227,10 @@ Se puede ver que el resultado es incluso mejor que el anterior y conseguimos un 
 
 Forma número 2: Comprobando si la pérdida se sigue reduciendo, al menos en un porcentaje elegido, a lo largo de las epochs (en mi ejemplo un 5%). En este caso el modelo generado es **modelearlyst2.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo.
 
+![EarlyS1](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/trainingearlys2.png)
+
+Se puede ver que la parada se ha realizado en la época 31. No necesitaríamos por tanto entrenar hasta las 100 épocas
+
+Este sería el resultado en test:
+
 
