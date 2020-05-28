@@ -174,10 +174,10 @@ En este nuevo archivo de python, seguimo el algoritmo Deep Q-Learning. Por lo ta
 Ahora que nuestra IA tiene un cerebro completamente funcional, es hora de entrenarlo. Y esto es exactamente lo que hacemos en este cuarto archivo de python. Comenzamos estableciendo todos los parámetros, luego construimos el entorno creando un objeto de la clase Environment(), luego construimos el cerebro de la IA creando un objeto de la clase Brain(), luego construimos el modelo de Deep Q-Learning creando un objeto de la clase DQN(), y finalmente lanzamos la fase de entrenamiento que conecta todos estos objetos, durante 1000 epochs de 5 meses cada uno. 
 En la fase de entrenamiento también exploramos un poco cuando llevamos a cabo las acciones las acciones. Esto consiste en ejecutar algunas acciones aleatorias de vez en cuando. En nuestro Caso Práctico, esto se realizará el 30% de las veces, ya que usamos un parámetro de exploración  ϵ=0.3, y luego lo forzamos a ejecutar una acción aleatoria al obtener un valor aleatorio entre 0 y 1 que está por debajo de  ϵ=0.3. La razón por la que hacemos un poco de exploración es porque mejora el proceso de aprendizaje por refuerzo profundo. Este truco se llama: Exploración vs. 
 
-4-1: Construcción del entorno creando un objeto de la clase Environment.
-4-2: Construyendo el cerebro artificial creando un objeto de la clase de Brain
-4-3: Construyendo el modelo DQN creando un objeto de la clase DQN.
-4-4: Elección del modo de entrenamiento.
-4-5: Comenzar el entrenamiento con un bule for durante más de 100 epochs de períodos de 5 meses.
-4-6: Durante cada epoch, repetimos todo el proceso de Deep Q-Learning, al tiempo que exploramos el 30% de las veces.
+- 4-1: Construcción del entorno creando un objeto de la clase Environment.
+- 4-2: Construyendo el cerebro artificial creando un objeto de la clase de Brain
+- 4-3: Construyendo el modelo DQN creando un objeto de la clase DQN.
+- 4-4: Elección del modo de entrenamiento.
+- 4-5: Comenzar el entrenamiento con un bule for durante más de 100 epochs de períodos de 5 meses.
+- 4-6: Durante cada epoch, repetimos todo el proceso de Deep Q-Learning, al tiempo que exploramos el 30% de las veces.
 
