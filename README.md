@@ -241,10 +241,12 @@ Se puede ver que el resultado es parecido al que conseguimos la fórmula anterio
 
 **training_earlystopping1_dropout.py**
 
-Voy a realizar una prueba con un segundo brain llamado **new_brain.py** donde se hace uso de la técnica **Dropout**. Utilizaré también la primera forma de parada temprana. El modelo que genero se llama **modelearlyst_dropout.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo.
+Voy a realizar una prueba con un segundo brain llamado **new_brain.py** donde se hace uso de la técnica **Dropout**. Utilizaré también la primera forma de parada temprana. El modelo que genero se llama **modelearlyst_dropout.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo. 
+Dejando 10 épocas para la parada temprana ésta se produce en la época 23 y se consigue un ahorro del 25%. Para conseguir un mejor resultado he aumentado el número de épocas de espera de la parada temprana a 20 con lo que la parada la tengo en la época 33
 
 Este sería el resultado en test:
 
+Consigo un 79% que es un resultado muy bueno de ahorro de energía.
 
 
 
