@@ -196,4 +196,15 @@ En términos de nuestro algoritmo de IA, aquí para la implementación de prueba
 - 5-4: Iniciación de la simulación de 1 año.
 - 5-5: En cada iteración (cada minuto), nuestra IA solo ejecuta la acción que resulta de su predicción, y no se lleva a cabo ninguna exploración o entrenamiento de Deep Q-Learning.
 
+#### Early Stopping
+
+El entrenamiento de soluciones de Inteligencia Artificial puede ser muy costoso, especialmente si se entrenan para muchos servidores en varios centros de datos. Por lo tanto, debemos optimizar absolutamente el tiempo de entrenamiento de estas IA. Una solución para esto es la detención anticipada. Consiste en detener el entrenamiento si el rendimiento no mejora después de un cierto período de tiempo (por ejemplo, después de un cierto número de epochs). Esto plantea la siguiente pregunta:
+
+¿Cómo evaluar la mejora del rendimiento? En esta tarea descubrirás dos formas y yo te implementaré una de ellas.
+
+Preguntas de esta tarea
+Forma número 1: Comprobando si la recompensa total acumulada durante todo el período de 5 meses (= 1 epoch de entrenamiento) sigue aumentando, después de un número determinado de epochs.
+
+Forma número 2: Comprobando si la pérdida se sigue reduciendo, al menos en un porcentaje elegido, a lo largo de las epochs.
+
 
