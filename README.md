@@ -124,4 +124,21 @@ donde:
 
 **Nota importante:** es importante comprender que los sistemas (nuestra IA y el sistema de enfriamiento del servidor) se evaluarán por separado para calcular las recompensas. Y dado que cada vez que sus acciones conducen a temperaturas diferentes, tendremos que realizar un seguimiento por separado de las dos temperaturas  TIA y T no IA.
 
+### Implementación
 
+Esta implementación se dividirá en 5 partes, cada parte con su propio archivo de Python. 
+
+- Construcción del entorno.
+- Construcción del cerebro.
+- Implementación del algoritmo de aprendizaje por refuerzo profundo (en nuestro caso será el modelo DQN).
+- Entrenar a la IA.
+- Probar de la IA.
+
+#### Paso 1: Construción del Entorno "enviroment.py"
+
+En este primer paso, vamos a construir el entorno dentro de una clase. ¿Por qué una clase? Porque nos gustaría tener nuestro entorno como un objeto que podamos crear fácilmente con cualquier valor de algunos parámetros que elijamos. Por ejemplo, podemos crear un objeto de entorno para un servidor que tenga un cierto número de usuarios conectados y una cierta velocidad de datos en un momento específico, y otro objeto de entorno para otro servidor que tenga un número diferente de usuarios conectados y un número diferente tasa de datos en otro momento. Y gracias a esta estructura avanzada de la clase, podemos conectar y reproducir fácilmente los objetos del entorno que creamos en diferentes servidores que tienen sus propios parámetros, por lo tanto, regulamos sus temperaturas con varias IA diferentes, de modo que terminamos minimizando el consumo de energía de un centro de datos completo.
+
+- 1-1: Introducción e inicialización de todos los parámetros y variables del entorno.
+- 1-2: Hacer un método que actualice el entorno justo después de que la IA ejecute una acción.
+- 1-3: Hacer un método que restablezca el entorno.
+- 1-4: hacer un método que nos proporcione en cualquier momento el estado actual, la última recompensa obtenida y si el juego ha terminado.
