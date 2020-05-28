@@ -233,4 +233,7 @@ Se puede ver que la parada se ha realizado en la época 31. No necesitaríamos p
 
 Este sería el resultado en test:
 
+![TestEarlyS2](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTestEarlys2.png)
+
+Se puede ver que el resultado es parecido al que conseguimos la fórmula anterior, un ahorro de un **55%**
 
