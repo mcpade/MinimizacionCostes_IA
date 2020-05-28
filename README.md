@@ -209,12 +209,12 @@ El entrenamiento de soluciones de Inteligencia Artificial puede ser muy costoso,
 
 **training_earlystopping1.py**
 
-Forma número 1: Comprobando si la recompensa total acumulada durante todo el período de 5 meses (= 1 epoch de entrenamiento) sigue aumentando, después de un número determinado de epochs, para nuestro ejemplo 10 épocas. En este caso el modelo generado es **modelearlyst.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo
+Forma número 1: Comprobando si la recompensa total acumulada durante todo el período de 5 meses (= 1 epoch de entrenamiento) sigue aumentando, después de un número determinado de epochs, (para nuestro ejemplo 10 épocas). En este caso el modelo generado es **modelearlyst.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo
 
 
 
 
-
-Forma número 2: Comprobando si la pérdida se sigue reduciendo, al menos en un porcentaje elegido, a lo largo de las epochs.
+**training_earlystopping2.py**
+Forma número 2: Comprobando si la pérdida se sigue reduciendo, al menos en un porcentaje elegido, a lo largo de las epochs (en mi ejemplo un 5%)
 
 
