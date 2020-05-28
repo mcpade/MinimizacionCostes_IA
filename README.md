@@ -198,6 +198,10 @@ En términos de nuestro algoritmo de IA, aquí para la implementación de prueba
 - 5-4: Iniciación de la simulación de 1 año.
 - 5-5: En cada iteración (cada minuto), nuestra IA solo ejecuta la acción que resulta de su predicción, y no se lleva a cabo ninguna exploración o entrenamiento de Deep Q-Learning.
 
+![Brain](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTest.png)
+
+Se ve que se consigue un ahorro de energía del **49%**
+
 #### Early Stopping
 
 El entrenamiento de soluciones de Inteligencia Artificial puede ser muy costoso, especialmente si se entrenan para muchos servidores en varios centros de datos. Por lo tanto, debemos optimizar absolutamente el tiempo de entrenamiento de estas IA. Una solución para esto es la detención anticipada. Consiste en detener el entrenamiento si el rendimiento no mejora después de un cierto período de tiempo (por ejemplo, después de un cierto número de epochs). Esto plantea la siguiente pregunta: ¿Cómo evaluar la mejora del rendimiento? 
