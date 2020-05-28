@@ -25,7 +25,7 @@ Antes de definir los estados, las acciones y las recompensas, vamos a explicar c
 - la velocidad máxima de transmisión de datos en el servidor, que será de 300
 - la velocidad máxima de transmisión de datos que puede subir o bajar por minuto, que será 10
 
-### Variables
+#### Variables
 
 - la temperatura del servidor en cualquier momento
 - la cantidad de usuarios en el servidor en cualquier momento
@@ -37,7 +37,7 @@ Todos estos parámetros y variables serán parte de nuestro entorno de servidor 
 
 A continuación, expliquemos los dos supuestos básicos del entorno. Es importante comprender que estos supuestos no están relacionados con la inteligencia artificial, sino que se utilizan para simplificar el entorno para que podamos centrarnos al máximo en la solución de inteligencia artificial.
 
-### Suposiciones:
+#### Suposiciones:
 
 Nos basaremos en los siguientes dos supuestos esenciales:
 
@@ -48,6 +48,14 @@ temp. del server = temp. atmosf. + 1.25 x n. de usuarios + 1.25 x ratio de trans
 
 Supuesto 2: la energía gastada por un sistema (nuestra IA o el sistema de enfriamiento integrado del servidor) que cambia la temperatura del servidor de  Tt a  Tt+1 en 1 unidad de tiempo (aquí 1 minuto), se puede aproximar nuevamente mediante regresión mediante una función lineal del cambio absoluto de temperatura del servidor:
 
+Et=|ΔTt|=|Tt+1−Tt|
+
+{Tt+1−Tt si Tt+1>Tt, es decir, si el servidor se calienta
+ Tt−Tt+1 si Tt+1<Tt, es decir, si el servidor se enfria}
+
+#### Simulación
+
+El número de usuarios y la velocidad de transmisión de datos fluctuarán aleatoriamente para simular un servidor real. Esto lleva a una aleatoriedad en la temperatura y la IA tiene que entender cuánta potencia de enfriamiento o calefacción tiene que transferir al servidor para no deteriorar el rendimiento del servidor y, al mismo tiempo, gastar la menor energía optimizando su transferencia de calor.
 
 
 
