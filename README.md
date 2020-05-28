@@ -46,12 +46,13 @@ Supongamos que después de realizar esta Regresión lineal múltiple, obtuvimos 
 
 <div align="center">temp. del server = temp. atmosf. + 1.25 x n. de usuarios + 1.25 x ratio de transf. de datos</div>
 
+
 Supuesto 2: la energía gastada por un sistema (nuestra IA o el sistema de enfriamiento integrado del servidor) que cambia la temperatura del servidor de  Tt a  Tt+1 en 1 unidad de tiempo (aquí 1 minuto), se puede aproximar nuevamente mediante regresión mediante una función lineal del cambio absoluto de temperatura del servidor:
 
-Et=|ΔTt|=|Tt+1−Tt|
+<div align="center">Et=|ΔTt|=|Tt+1−Tt|</div>
 
-{Tt+1−Tt si Tt+1>Tt, es decir, si el servidor se calienta
- Tt−Tt+1 si Tt+1<Tt, es decir, si el servidor se enfria}
+<div align="center">{Tt+1−Tt si Tt+1>Tt, es decir, si el servidor se calienta</div>
+ <div align="center">Tt−Tt+1 si Tt+1<Tt, es decir, si el servidor se enfria}</div>
 
 #### Simulación
 
@@ -69,7 +70,7 @@ Si la IA está activada, en ese caso el sistema de enfriamiento integrado del se
 El objetivo es que nuestra IA gaste menos energía que la energía gastada por el sistema de enfriamiento no inteligente en el servidor. Y dado que, según el supuesto 2 anterior, la energía gastada en el servidor (por cualquier sistema) es proporcional al cambio de temperatura dentro de una unidad de tiempo. Eso significa que la energía ahorrada por la IA en cada instante  
 t (cada minuto) es, de hecho, la diferencia en los cambios absolutos de temperatura causados en el servidor entre el sistema de enfriamiento integrado del servidor no inteligente y la IA de  t y  t+1
 
-Energia ahorrada por la IA entre t y t+1=|ΔT Sistema de Enfriamiento Integrado del Servidor|−|ΔT IA| =|ΔTno IA|−|ΔTIA|
+<div align="center">Energia ahorrada por la IA entre t y t+1=|ΔT Sistema de Enfriamiento Integrado del Servidor|−|ΔT IA| =|ΔTno IA|−|ΔTIA|</div>
  
 donde:
 
@@ -105,11 +106,11 @@ Accion|¿Que hace?
 
 La recompensa en la iteración t es la energía gastada en el servidor que la IA está ahorrando con respecto al sistema de enfriamiento integrado del servidor, es decir, la diferencia entre la energía que gastaría el sistema de enfriamiento no inteligente si la IA fuera desactivada y la energía que la IA gasta en el servidor:
 
-Rewardt = Et no IA − Et IA
+<div align="center">Rewardt = Et no IA − Et IA</div>
 
 Y como (Supuesto 2), la energía gastada es igual al cambio de temperatura causado en el servidor (por cualquier sistema, incluido el AI o el sistema de enfriamiento no inteligente):
 
-Reward t =|ΔT no IA | −|ΔTIA|
+<div align="center">Reward t =|ΔT no IA | −|ΔTIA|</div>
 
 donde:
 
