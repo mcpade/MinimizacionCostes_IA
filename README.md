@@ -206,7 +206,9 @@ Se ve que se consigue un ahorro de energía del **49%**
 
 El entrenamiento de soluciones de Inteligencia Artificial puede ser muy costoso, especialmente si se entrenan para muchos servidores en varios centros de datos. Por lo tanto, debemos optimizar absolutamente el tiempo de entrenamiento de estas IA. Una solución para esto es la detención anticipada. Consiste en detener el entrenamiento si el rendimiento no mejora después de un cierto período de tiempo (por ejemplo, después de un cierto número de epochs). Esto plantea la siguiente pregunta: ¿Cómo evaluar la mejora del rendimiento? 
 
+
 **training_earlystopping1.py**
+
 Forma número 1: Comprobando si la recompensa total acumulada durante todo el período de 5 meses (= 1 epoch de entrenamiento) sigue aumentando, después de un número determinado de epochs, para nuestro ejemplo 10 épocas. En este caso el modelo generado es **modelearlyst.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo
 
 
