@@ -249,7 +249,7 @@ Este sería el resultado en test:
 ![TestEarlyS1Dropout](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTestEarlys1_Dropout.png)
 
 
-Consigo un 79% que es un resultado muy bueno de ahorro de energía.
+Consigo un **79%** que es un resultado muy bueno de ahorro de energía.
 
 
 
