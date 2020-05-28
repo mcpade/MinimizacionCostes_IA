@@ -147,4 +147,4 @@ En este primer paso, vamos a construir el entorno dentro de una clase. ¿Por qu�
 
 En este Paso 2, vamos a construir el cerebro artificial de nuestra IA, que no es más que una red neuronal completamente conectada
 
-![Brain](https://raw.githubusercontent.com/mcpade/OptimizacionProcesos/master/images/Brain.png)
+![Brain](https://raw.githubusercontent.com/mcpade/OptimizacionProcesos/master/images/brain.png)
