@@ -1,48 +1,48 @@
 # MinimizacionCostes_IA
 
-## Caso Práctico: Minimización de Costes en el Consumo Energético de un Centro de Datos
+## Practical Case: Minimization of Costs in the Energy Consumption of a Data Center
 
-### Problema a resolver
+### Problem to solve
  
-Configurar el entorno de un servidor y construir una IA que controlará el enfriamiento / calentamiento del servidor 
-para que se mantenga en un rango óptimo de temperaturas mientras se ahorra la máxima energía, minimizando así los costes.
+Set up a server environment and build an AI that will control the cooling / heating of the server so that it stays in an optimal temperature range while saving maximum energy, thus minimizing costs.
 
-Se utiliza un modelo IA DQN (Deep Q-Learning) y el objetivo será lograr al menos un 40% de ahorro de energía.
+An IA DQN (Deep Q-Learning) model is used and the goal will be to achieve at least 40% energy savings.
 
-### Definción del entorno
+### Definition of the environment
 
-Antes de definir los estados, las acciones y las recompensas, vamos a explicar cómo funciona el servidor. Primero, enumeraremos todos los parámetros y variables del entorno por los cuales se controla el servidor. 
+Before defining statuses, actions, and rewards, let's explain how the server works. First, we will list all the environment parameters and variables by which the server is controlled.
 
-#### Parámetros
+#### Parameters
 
-- la temperatura atmosférica promedio durante un mes el rango óptimo de temperaturas del servidor, que será  (18∘C,24∘C)
-- la temperatura mínima del servidor por debajo de la cual no funciona, que será  20∘C
-- la temperatura máxima del servidor por encima de la cual no funciona, que será de  80∘C
-- el número mínimo de usuarios en el servidor, que será 10
-- el número máximo de usuarios en el servidor, que será de 100
-- el número máximo de usuarios en el servidor que puede subir o bajar por minuto, que será 5
-- la tasa mínima de transmisión de datos en el servidor, que será 20
-- la velocidad máxima de transmisión de datos en el servidor, que será de 300
-- la velocidad máxima de transmisión de datos que puede subir o bajar por minuto, que será 10
+- the average atmospheric temperature during a month
+- the optimal range of server temperatures, which will be (18∘C, 24∘C)
+- the minimum temperature of the server below which it does not work, which will be 20∘C
+- the maximum temperature of the server above which it does not work, which will be 80∘C
+- the minimum number of users on the server, which will be 10
+- the maximum number of users on the server, which will be 100
+- the maximum number of users on the server that can go up or down per minute, which will be 5
+- the minimum data transmission rate on the server, which will be 20
+- the maximum data transmission speed on the server, which will be 300
+- the maximum speed of data transmission that can go up or down per minute, which will be 10
 
 #### Variables
 
-- la temperatura del servidor en cualquier momento
-- la cantidad de usuarios en el servidor en cualquier momento
-- la velocidad de transmisión de datos en cualquier minuto
-- la energía gastada por la IA en el servidor (para enfriarlo o calentarlo) en cualquier momento
-- la energía gastada por el sistema de enfriamiento integrado del servidor que automáticamente lleva la temperatura del servidor al rango óptimo cada vez que la temperatura del servidor sale de este rango óptimo
+- server temperature at any time
+- the number of users on the server at any time
+- the speed of data transmission at any minute
+- the energy expended by the AI on the server (to cool or heat it) at any time
+- the energy expended by the server's built-in cooling system that automatically brings the server temperature to the optimal range whenever the server temperature falls outside of this optimal range
 
-Todos estos parámetros y variables serán parte de nuestro entorno de servidor e influirán en las acciones de la IA en el servidor.
+All these parameters and variables will be part of our server environment and will influence the actions of the AI on the server.
 
-A continuación, expliquemos los dos supuestos básicos del entorno. Es importante comprender que estos supuestos no están relacionados con la inteligencia artificial, sino que se utilizan para simplificar el entorno para que podamos centrarnos al máximo en la solución de inteligencia artificial.
+Next, let's explain the two basic assumptions of the environment. It is important to understand that these assumptions are not related to artificial intelligence but are used to simplify the environment so that we can fully focus on the artificial intelligence solution.
 
-#### Suposiciones:
+#### Assumptions:
 
-Nos basaremos en los siguientes dos supuestos esenciales:
+We will build on the following two essential assumptions:
 
-Supuesto 1: la temperatura del servidor se puede aproximar mediante Regresión lineal múltiple, mediante una función lineal de la temperatura atmosférica, el número de usuarios y la velocidad de transmisión de datos:
-Supongamos que después de realizar esta Regresión lineal múltiple, obtuvimos los siguientes valores de los coeficientes:  
+Assumption 1: The server temperature can be approximated by Multiple Linear Regression, using a linear function of the atmospheric temperature, the number of users, and the data transmission rate:
+Suppose that after performing this Multiple Linear Regression, we obtained the following values of the coefficients:
 
 <div align="center">temp. del server = temp. atmosf. + 1.25 x n. de usuarios + 1.25 x ratio de transf. de datos</div>
 
@@ -50,206 +50,208 @@ Supongamos que después de realizar esta Regresión lineal múltiple, obtuvimos 
 
 
 
-Supuesto 2: la energía gastada por un sistema (nuestra IA o el sistema de enfriamiento integrado del servidor) que cambia la temperatura del servidor de  Tt a  Tt+1 en 1 unidad de tiempo (aquí 1 minuto), se puede aproximar nuevamente mediante regresión mediante una función lineal del cambio absoluto de temperatura del servidor:
+Assumption 2: The energy expended by a system (our AI or the server's embedded cooling system) that changes the server temperature from Tt to Tt + 1 in 1 unit of time (here 1 minute), can be approximated again by regression Using a linear function of the absolute change in server temperature:
 
 <div align="center">Et=|ΔTt|=|Tt+1−Tt|</div>
 
-{Tt+1−Tt si Tt+1>Tt, es decir, si el servidor se calienta
+{Tt+1−Tt si Tt+1>Tt, i.e. if the server gets hot
 
- Tt−Tt+1 si Tt+1<Tt, es decir, si el servidor se enfria}
+ Tt−Tt+1 si Tt+1<Tt, that is, if the server gets cold}
 
-#### Simulación
+#### Simulation
 
-El número de usuarios y la velocidad de transmisión de datos fluctuarán aleatoriamente para simular un servidor real. Esto lleva a una aleatoriedad en la temperatura y la IA tiene que entender cuánta potencia de enfriamiento o calefacción tiene que transferir al servidor para no deteriorar el rendimiento del servidor y, al mismo tiempo, gastar la menor energía optimizando su transferencia de calor.
+The number of users and the data transmission speed will fluctuate randomly to simulate a real server. This leads to randomness in temperature and the AI has to understand how much cooling or heating power it has to transfer to the server so as not to deteriorate the server's performance and at the same time spend the least energy optimizing its heat transfer.
 
-### Funcionamiento general
+### General operation
 
-Dentro de un centro de datos, estamos tratando con un servidor específico que está controlado por los parámetros y variables enumerados anteriormente. Cada minuto, algunos usuarios nuevos inician sesión en el servidor y algunos usuarios actuales cierran sesión, por lo tanto, actualizan el número de usuarios activos en el servidor. Igualmente, cada minuto se transmiten algunos datos nuevos al servidor, y algunos datos existentes se transmiten fuera del servidor, por lo tanto, se actualiza la velocidad de transmisión de datos que ocurre dentro del servidor. Por lo tanto, según el supuesto 1 anterior, la temperatura del servidor se actualiza cada minuto. 
-**Dos posibles sistemas pueden regular la temperatura del servidor: la IA o el sistema de enfriamiento integrado del servidor.**
+Within a data center, we are dealing with a specific server that is controlled by the parameters and variables listed above. Every minute some new users log into the server and some current users log out, thus updating the number of active users on the server. Likewise, every minute some new data is transmitted to the server, and some existing data is transmitted outside the server, therefore the data transmission rate that occurs within the server is updated. Therefore, based on assumption 1 above, the server temperature is updated every minute.
+**Two possible systems can regulate the server temperature: the AI or the integrated server cooling system.**
 
-El sistema de enfriamiento integrado del servidor es un sistema no inteligente que automáticamente devolverá la temperatura del servidor a su temperatura óptima: cuando la temperatura del servidor se actualiza cada minuto, puede mantenerse dentro del rango de temperaturas óptimas (18∘C,24∘C), o salir de este rango. Si sale del rango óptimo, como por ejemplo 30∘C, el sistema de enfriamiento integrado del servidor llevará automáticamente la temperatura al límite más cercano del rango óptimo, que es  24∘C. Sin embargo, el sistema de enfriamiento integrado de este servidor lo hará solo cuando la IA no esté activada. 
+The server's built-in cooling system is a non-intelligent system that will automatically return the server temperature to its optimal temperature - when the server temperature is updated every minute, it can stay within the optimal temperature range (18∘C, 24∘C ), or go out of this range. If it falls outside the optimal range, such as 30∘C, the server's built-in cooling system will automatically bring the temperature to the closest limit of the optimal range, which is 24∘C. However, the built-in cooling system of this server will only do so when AI is not activated.
 
-Si la IA está activada, en ese caso el sistema de enfriamiento integrado del servidor se desactiva y es la IA la que actualiza la temperatura del servidor para regularlo de la mejor manera. Pero la IA hace eso después de algunas predicciones previas, no de una manera determinista como con el sistema de enfriamiento integrado del servidor no inteligente. Antes de que haya una actualización de la cantidad de usuarios y la velocidad de transmisión de datos que hace que cambie la temperatura del servidor, la IA predice si debería enfriar el servidor, no hacer nada o calentar el servidor. Entonces ocurre el cambio de temperatura y la IA reitera. Y dado que estos dos sistemas son complementarios, los evaluaremos por separado para comparar su rendimiento.
+If AI is enabled, then the server's built-in cooling system is disabled and the AI ​​updates the server temperature to better regulate it. But the AI ​​does that after some previous predictions, not in a deterministic way like with the non-smart server's built-in cooling system. Before there is an update to the number of users and the data transmission speed that causes the server temperature to change, the AI ​​predicts whether it should cool down the server, do nothing, or warm up the server. Then the temperature change occurs and the AI ​​reiterates. And since these two systems are complementary, we will evaluate them separately to compare their performance.
 
-El objetivo es que nuestra IA gaste menos energía que la energía gastada por el sistema de enfriamiento no inteligente en el servidor. Y dado que, según el supuesto 2 anterior, la energía gastada en el servidor (por cualquier sistema) es proporcional al cambio de temperatura dentro de una unidad de tiempo. Eso significa que la energía ahorrada por la IA en cada instante  
-t (cada minuto) es, de hecho, la diferencia en los cambios absolutos de temperatura causados en el servidor entre el sistema de enfriamiento integrado del servidor no inteligente y la IA de  t y  t+1
+The goal is for our AI to use less energy than the energy wasted by the non-intelligent cooling system on the server. And since, according to assumption 2 above, the energy expended on the server (by any system) is proportional to the change in temperature within a unit of time. That means that the energy saved by the AI at every moment
+t (every minute) is in fact the difference in absolute temperature changes caused in the server between the integrated cooling system of the non-intelligent server and the AI of t and t + 1
 
 <div align="center">Energia ahorrada por la IA entre t y t+1=|ΔT Sistema de Enfriamiento Integrado del Servidor|−|ΔT IA| =|ΔTno IA|−|ΔTIA|</div>
  
-donde:
+where:
 
-ΔTnoIA  es el cambio de temperatura que causaría el sistema de enfriamiento integrado del servidor sin la IA en el servidor durante la iteración t, es decir, del instante t al instante t+1
+ΔTnoIA  is the change in temperature that the integrated server cooling system would cause without the AI in the server during iteration t, that is, from time t to time t + 1
 
-ΔTAI    es el cambio de temperatura causado por la IA en el servidor durante la iteración t, es decir, del instante t al instante t+1
+ΔTAI    is the temperature change caused by the AI in the server during iteration t, that is, from time t to time t + 1
 
-Nuestro objetivo será ahorrar la energía máxima cada minuto, por lo tanto, ahorrar la energía total máxima durante 1 año completo de simulación y, finalmente, ahorrar los costos máximos en la factura de electricidad de refrigeración / calefacción.
+Our goal will be to save the maximum energy every minute, thus save the maximum total energy for 1 full simulation year, and finally save the maximum costs on the cooling / heating electricity bill.
 
-### Definición de los estados
+### Definition of states
 
-El estado de entrada st en el momento t se compone de los siguientes tres elementos:
+The input state st at time t consists of the following three elements:
 
-- La temperatura del servidor en el instante t.
-- El número de usuarios en el servidor en el instante t.
-- La velocidad de transmisión de datos en el servidor en el instante t.
+- The server temperature at time t.
+- The number of users on the server at time t.
+- The data transmission speed on the server at time t.
 
-Por lo tanto, el estado de entrada será un vector de entrada de estos tres elementos. Nuestra IA tomará este vector como entrada y devolverá la acción para ejecutar en cada instante t.
+Therefore, the input state will be an input vector of these three elements. Our AI will take this vector as input and will return the action to execute at every instant t.
 
-### Definición de las acciones
+### Definition of actions
 
-Las acciones son simplemente los cambios de temperatura que la IA puede causar dentro del servidor, para calentarlo o enfriarlo. Para que nuestras acciones sean discretas, consideraremos 5 posibles cambios de temperatura de  −3∘C a  +3∘C, para que terminemos con las 5 acciones posibles que la IA puede llevar a cabo para regular la temperatura del servidor:
-Accion|¿Que hace?
+Actions are simply the temperature changes that AI can cause inside the server, to heat it up or cool it down. To keep our actions discrete, we will consider 5 possible changes in temperature from −3∘C to + 3∘C, so that we end up with the 5 possible actions that the AI can take to regulate the server temperature:
+
+Action| What does?
 ------|---------------------------------
-0     | La IA enfría el servidor 3∘C
-1     | La IA enfría el servidor 1.5 ∘C
-2     | La IA no transfiere calor ni frio al servidor (sin cambio de temperatura
-3     | La IA calienta el servidor 1.5 ∘C
-4     | La IA caliente el servidor 3 ∘C
+0     | AI cools server 3∘C
+1     | AI cools server 1.5 ∘C
+2     | AI does not transfer heat or cold to the server (no temperature change)
+3     | AI heats up the server 1.5 ∘C
+4     | AI heat server 3 ∘C
 
 
-### Definición de las recompensas
+### Definition of rewards
 
-La recompensa en la iteración t es la energía gastada en el servidor que la IA está ahorrando con respecto al sistema de enfriamiento integrado del servidor, es decir, la diferencia entre la energía que gastaría el sistema de enfriamiento no inteligente si la IA fuera desactivada y la energía que la IA gasta en el servidor:
+The reward in iteration t is the energy expended on the server that the AI is saving relative to the server's integrated cooling system, that is, the difference between the energy that the non-intelligent cooling system would use if the AI were deactivated and the energy the AI spends on the server:
 
 <div align="center">Rewardt = Et no IA − Et IA</div>
 
-Y como (Supuesto 2), la energía gastada es igual al cambio de temperatura causado en el servidor (por cualquier sistema, incluido el AI o el sistema de enfriamiento no inteligente):
+And since (Assumption 2), the energy expended equals the temperature change caused in the server (by any system, including AI or non-smart cooling system):
 
 <div align="center">Reward t =|ΔT no IA | −|ΔTIA|</div>
 
-donde:
+where:
 
-ΔT no IA es el cambio de temperatura que causaría el sistema de enfriamiento integrado del servidor sin la IA en el servidor durante la iteración t, es decir, del instante tal instante t+1
+ΔT no IA is the change in temperature that the integrated server cooling system would cause without the AI in the server during iteration t, that is, from time to time t + 1
 
-ΔTAI es el cambio de temperatura causado por la IA en el servidor durante la iteración t, es decir, del instante tal instante t+1
+ΔTAI is the change in temperature caused by the AI in the server during the iteration t, that is, from the instant such instant t + 1
 
-**Nota importante:** es importante comprender que los sistemas (nuestra IA y el sistema de enfriamiento del servidor) se evaluarán por separado para calcular las recompensas. Y dado que cada vez que sus acciones conducen a temperaturas diferentes, tendremos que realizar un seguimiento por separado de las dos temperaturas  TIA y T no IA.
+**Important note:** It is important to understand that the systems (our AI and the server cooling system) will be evaluated separately to calculate the rewards. And since each time your actions lead to different temperatures, we will have to separately track the two temperatures TIA and T not IA.
 
-### Implementación
+### Implementation
 
-Esta implementación se dividirá en 5 partes, cada parte con su propio archivo de Python. 
+This implementation will be divided into 5 parts, each part with its own Python file.
 
-- Construcción del entorno.
-- Construcción del cerebro.
-- Implementación del algoritmo de aprendizaje por refuerzo profundo (en nuestro caso será el modelo DQN).
-- Entrenar a la IA.
-- Probar de la IA.
+- Construction of the environment.
+- Construction of the brain.
+- Implementation of the deep reinforcement learning algorithm (in our case it will be the DQN model).
+- Train the AI.
+- Test the AI.
 
-#### Paso 1: Construción del Entorno "enviroment.py"
+#### Step 1: Building the Environment "enviroment.py"
 
-En este primer paso, vamos a construir el entorno dentro de una clase. ¿Por qué una clase? Porque nos gustaría tener nuestro entorno como un objeto que podamos crear fácilmente con cualquier valor de algunos parámetros que elijamos. Por ejemplo, podemos crear un objeto de entorno para un servidor que tenga un cierto número de usuarios conectados y una cierta velocidad de datos en un momento específico, y otro objeto de entorno para otro servidor que tenga un número diferente de usuarios conectados y un número diferente tasa de datos en otro momento. Y gracias a esta estructura avanzada de la clase, podemos conectar y reproducir fácilmente los objetos del entorno que creamos en diferentes servidores que tienen sus propios parámetros, por lo tanto, regulamos sus temperaturas con varias IA diferentes, de modo que terminamos minimizando el consumo de energía de un centro de datos completo.
+In this first step, we are going to build the environment inside a class. Why a class? Because we would like to have our environment as an object that we can easily create with any value of some parameters that we choose. For example, we can create an environment object for a server that has a certain number of connected users and a certain data rate at a specific time, and another environment object for another server that has a different number of connected users and a number different data rate at another time. And thanks to this advanced class structure, we can easily connect and reproduce the environment objects that we create on different servers that have their own parameters, therefore we regulate their temperatures with several different AIs, so that we end up minimizing the consumption of power of an entire data center.
 
-- 1-1: Introducción e inicialización de todos los parámetros y variables del entorno.
-- 1-2: Hacer un método que actualice el entorno justo después de que la IA ejecute una acción.
-- 1-3: Hacer un método que restablezca el entorno.
-- 1-4: hacer un método que nos proporcione en cualquier momento el estado actual, la última recompensa obtenida y si el juego ha terminado.
+- 1-1: Introduction and initialization of all parameters and environment variables.
+- 1-2: Make a method that updates the environment right after the AI ​​executes an action.
+- 1-3: Make a method that restores the environment.
+- 1-4: make a method that provides us at any time the current status, the last reward obtained and if the game is over.
 
-#### Paso 2: Contrucción del cerebro "brain.py"
+#### Step 2: Building the brain "brain.py"
 
-En este Paso 2, vamos a construir el cerebro artificial de nuestra IA, que no es más que una red neuronal completamente conectada
+In this Step 2, we are going to build the artificial brain of our AI, which is nothing more than a fully connected neural network
 
 ![Brain](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/brain.png)
 
-Nuevamente, construiremos este cerebro artificial dentro de una clase, por la misma razón que antes, que nos permite crear varios cerebros artificiales para diferentes servidores dentro de un centro de datos. De hecho, tal vez algunos servidores necesitarán cerebros artificiales diferentes con hiperparámetros diferentes que otros servidores. Es por eso que gracias a esta estructura avanzada de python de clase / objeto, podemos cambiar fácilmente de un cerebro a otro para regular la temperatura de un nuevo servidor que requiere una IA con diferentes parámetros de redes neuronales.
+Again, we will build this artificial brain within a class, for the same reason as before, which allows us to create multiple artificial brains for different servers within a data center. In fact, maybe some servers will need different artificial brains with different hyperparameters than other servers. That is why thanks to this advanced class / object python structure, we can easily switch from one brain to another to regulate the temperature of a new server that requires an AI with different neural network parameters.
 
-Construiremos este cerebro artificial gracias a la biblioteca **Keras**. Desde esta librería utilizaremos la clase Dense() para crear nuestras dos capas ocultas completamente conectadas, la primera con 64 neuronas ocultas y la segunda con 32 neuronas. Y luego, utilizaremos la clase Dense() nuevamente para devolver los valores Q, que tienen en cuenta las salidas de las redes neuronales artificiales. Luego, más adelante en el entrenamiento y los archivos de prueba, utilizaremos el método argmax para seleccionar la acción que tenga el valor Q máximo. Luego, ensamblamos todos los componentes del cerebro, incluidas las entradas y las salidas, creándolo como un objeto de la clase Model() (muy útil para luego guardar y cargar un modelo en producción con pesos específicos). Finalmente, lo compilaremos con una función de pérdidas que medirá el error cuadrático medio y el optimizador de Adam. 
+We will build this artificial brain thanks to the **Keras** library. From this library we will use the Dense () class to create our two completely connected hidden layers, the first with 64 hidden neurons and the second with 32 neurons. And then we'll use the Dense () class again to return the Q values, which take into account the outputs of artificial neural networks. Then later in the training and test files we will use the argmax method to select the action that has the maximum Q value. Then, we assemble all the components of the brain, including the inputs and outputs, creating it as an object of the Model () class (very useful for later saving and loading a model in production with specific weights). Finally, we will compile it with a loss function that will measure the root mean square error and Adam's optimizer.
 
-- 2-1: Construir la capa de entrada compuesta de los estados de entrada.
-- 2-2: Construir las capas ocultas con un número elegido de estas capas y neuronas dentro de cada una, completamente conectadas a la capa de entrada y entre ellas.
-- 2-3: Construir la capa de salida, completamente conectada a la última capa oculta.
-- 2-4: Ensamblar la arquitectura completa dentro de un modelo de Keras.
-- 2-5: Compilación del modelo con una función de pérdida de error cuadrático medio y el optimizador elegido.
+- 2-1: Build the input layer composed of the input states.
+- 2-2: Build the hidden layers with a chosen number of these layers and neurons within each one, fully connected to the input layer and between them.
+- 2-3: Build the output layer, completely connected to the last hidden layer.
+- 2-4: Assemble the complete architecture within a Keras model.
+- 2-5: Compilation of the model with a mean square error loss function and the chosen optimizer.
 
-Se ha creado un segundo brain llamado **new_brain.py** donde se hace uso de la técnica **Dropout**. Es una técnica de regularización que evita el sobreajuste. Simplemente consiste en desactivar una cierta proporción de neuronas aleatorias durante cada paso de propagación hacia adelante y hacia atrás. De esa manera, no todas las neuronas aprenden de la misma manera, evitando así que la red neuronal sobreajuste los datos de entrenamiento.
+A second brain called **new_brain.py** has been created where the **Dropout** technique is used. It is a regularization technique that avoids overfitting. It simply consists of deactivating a certain proportion of random neurons during each step of forward and backward propagation. In this way, not all neurons learn in the same way, thus preventing the neural network from overfitting the training data.
 
-#### Paso 3: Implementación del algoritmo de Deep Reinforcement Learning  "dqn.py"
+#### Step 3: Implementing the Deep Reinforcement Learning algorithm  "dqn.py"
 
-En este nuevo archivo de python, seguimo el algoritmo Deep Q-Learning. Por lo tanto, esta implementación sigue los siguientes subpasos:
+In this new python file, I follow the Deep Q-Learning algorithm. Therefore, this implementation follows the following substeps:
 
-- 3-1: Introducción e inicialización de todos los parámetros y variables del modelo de DQN.
-- 3-2: Hacer un método que construya la memoria en Repetición de Experiencia.
-- 3-3: Hacer un método que construya y devuelva dos lotes de 10 entradas y 10 objetivos
+- 3-1: Introduction and initialization of all the parameters and variables of the DQN model.
+- 3-2: Make a method that builds memory in Repetition of Experience.
+- 3-3: Make a method that builds and returns two batches of 10 inputs and 10 goals
 
-#### Paso 4: Entrenar la IA  "training.py"
+#### Step 4: Train the AI  "training.py"
 
-Ahora que nuestra IA tiene un cerebro completamente funcional, es hora de entrenarlo. Y esto es exactamente lo que hacemos en este cuarto archivo de python. Comenzamos estableciendo todos los parámetros, luego construimos el entorno creando un objeto de la clase Environment(), luego construimos el cerebro de la IA creando un objeto de la clase Brain(), luego construimos el modelo de Deep Q-Learning creando un objeto de la clase DQN(), y finalmente lanzamos la fase de entrenamiento que conecta todos estos objetos, durante 1000 epochs de 5 meses cada uno. 
-En la fase de entrenamiento también exploramos un poco cuando llevamos a cabo las acciones las acciones. Esto consiste en ejecutar algunas acciones aleatorias de vez en cuando. En nuestro Caso Práctico, esto se realizará el 30% de las veces, ya que usamos un parámetro de exploración  ϵ=0.3, y luego lo forzamos a ejecutar una acción aleatoria al obtener un valor aleatorio entre 0 y 1 que está por debajo de  ϵ=0.3. La razón por la que hacemos un poco de exploración es porque mejora el proceso de aprendizaje por refuerzo profundo. Este truco se llama: Exploración vs. 
+ATime that our AI has a fully functional brain, it's time to train it. And this is exactly what we do in this fourth python file. We start by setting all the parameters, then we build the environment by creating an Environment () class object, then we build the AI ​​brain by creating an object of the Brain () class, then we build the Deep Q-Learning model by creating an object of the DQN () class, and finally we launch the training phase that connects all these objects, for 1000 epochs of 5 months each.
+In the training phase we also explore a bit when we carry out the actions the actions. This consists of executing some random actions from time to time. In our Case Study, this will be done 30% of the time, since we use a scan parameter ϵ = 0.3, and then we force it to execute a random action by obtaining a random value between 0 and 1 that is below ϵ = 0.3. The reason we do a little exploring is because it improves the deep reinforcement learning process. This trick is called: Exploration vs.
 
-- 4-1: Construcción del entorno creando un objeto de la clase Environment.
-- 4-2: Construyendo el cerebro artificial creando un objeto de la clase de Brain
-- 4-3: Construyendo el modelo DQN creando un objeto de la clase DQN.
-- 4-4: Elección del modo de entrenamiento.
-- 4-5: Comenzar el entrenamiento con un bule for durante más de 100 epochs de períodos de 5 meses.
-- 4-6: Durante cada epoch, repetimos todo el proceso de Deep Q-Learning, al tiempo que exploramos el 30% de las veces.
+- 4-1: Construction of the environment by creating an object of the Environment class.
+- 4-2: Building the artificial brain by creating an object of Brain's class
+- 4-3: Building the DQN model by creating an object of the DQN class.
+- 4-4: Choice of training mode.
+- 4-5: Begin training with a bule for over 100 epochs of 5-month periods.
+- 4-6: During each epoch, we repeat the entire Deep Q-Learning process, while exploring 30% of the time.
 
-Después de ejecutar el código, ya vemos un buen rendimiento de nuestra IA durante el entrenamiento, gastando la mayor parte del tiempo menos energía que el sistema alternativo, es decir, el sistema de enfriamiento integrado del servidor. Pero ese es solo el entrenamiento, ahora necesitamos ver si también obtenemos un buen rendimiento en una nueva simulación de 1 año. Ahí es donde entra en juego nuestro próximo y último archivo de python.
-El modelo obtenido se ha guardado en **model.h5**
+After running the code, we already see a good performance of our AI during training, spending most of the time less energy than the alternative system, that is, the integrated cooling system of the server. But that's just the training, now we need to see if we also get a good performance in a new 1 year simulation. That's where our next and final python file comes in.
+The obtained model has been saved in **model.h5**
 
 ![Train](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/training.png)
 
-#### Paso 5: Probar la IA  "testing.py"
+#### Step 5: Test the AI  "testing.py"
 
-Ahora tenemos que probar el rendimiento de nuestra IA en una situación completamente nueva. Para hacerlo, ejecutaremos una simulación de 1 año, solo en modo de inferencia, lo que significa que no habrá entrenamiento en ningún momento. Nuestra IA solo devolverá predicciones durante un año completo de simulación. Luego, gracias a nuestro objeto Environment, obtendremos al final la energía total gastada por la IA durante este año completo, así como la energía total gastada por el sistema de enfriamiento integrado del servidor. Eventualmente compararemos estas dos energías totales gastadas, simplemente calculando su diferencia relativa (en %), lo que nos dará exactamente la energía total ahorrada por la IA. 
+Now we have to test the performance of our AI in a completely new situation. To do this, we will run a 1-year simulation, in inference mode only, which means there will be no training at any time. Our AI will only return predictions for a full year of simulation. Then, thanks to our Environment object, we will finally get the total energy expended by the AI ​​during this entire year, as well as the total energy expended by the server's integrated cooling system. We will eventually compare these two total energies expended, simply by calculating their relative difference (in%), which will give us exactly the total energy saved by the AI.
 
-En términos de nuestro algoritmo de IA, aquí para la implementación de prueba casi tenemos lo mismo que antes, excepto que esta vez, no tenemos que crear un objeto Brain ni un objeto modelo DQN, y por supuesto no debemos ejecutar el proceso de Deep Q-Learning durante las épocas de entrenamiento. Sin embargo, tenemos que crear un nuevo objeto de Environment, y en lugar de crear un cerebro, cargaremos nuestro cerebro artificial con sus pesos pre-entrenados del entrenamiento anterior que ejecutamos en el Paso 4 - Entrenamiento de la IA (model.h5). 
+In terms of our AI algorithm, here for the test implementation we have pretty much the same as before, except this time, we don't have to create a Brain object or a DQN model object, and of course we shouldn't run the Deep Q process. -Learning during training periods. However, we have to create a new Environment object, and instead of creating a brain, we will load our artificial brain with its pre-trained weights from the previous training that we ran in Step 4 - AI Training (model.h5).
 
-- 5-1: Construcción de un nuevo entorno creando un objeto de la clase Environment.
-- 5-2: Carga del cerebro artificial con sus pesos pre-entrenados del entrenamiento anterior.
-- 5-3: Elección del modo de inferencia.
-- 5-4: Iniciación de la simulación de 1 año.
-- 5-5: En cada iteración (cada minuto), nuestra IA solo ejecuta la acción que resulta de su predicción, y no se lleva a cabo ninguna exploración o entrenamiento de Deep Q-Learning.
+- 5-1: Construction of a new environment by creating an object of the Environment class.
+- 5-2: Loading the artificial brain with its pre-trained weights from the previous training.
+- 5-3: Choice of inference mode.
+- 5-4: Initiation of the 1-year simulation.
+- 5-5: In each iteration (every minute), our AI only executes the action that results from its prediction, and no exploration or Deep Q-Learning training is carried out.
 
 ![Resultado](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTest.png)
 
-Se ve que se consigue un ahorro de energía del **49%**
+It is seen that an energy saving of **49%** is achieved
 
 #### Early Stopping
 
-El entrenamiento de soluciones de Inteligencia Artificial puede ser muy costoso, especialmente si se entrenan para muchos servidores en varios centros de datos. Por lo tanto, debemos optimizar absolutamente el tiempo de entrenamiento de estas IA. Una solución para esto es la detención anticipada. Consiste en detener el entrenamiento si el rendimiento no mejora después de un cierto período de tiempo (por ejemplo, después de un cierto número de epochs). Esto plantea la siguiente pregunta: ¿Cómo evaluar la mejora del rendimiento? 
+
+533/5000
+Training Artificial Intelligence solutions can be very expensive, especially if training for many servers in multiple data centers. Therefore, we must absolutely optimize the training time of these AIs. One solution for this is early stopping. It consists of stopping training if performance does not improve after a certain period of time (for example, after a certain number of epochs). This raises the question: How to evaluate performance improvement?
 
 
 **training_earlystopping1.py**
 
-Forma número 1: Comprobando si la recompensa total acumulada durante todo el período de 5 meses (= 1 epoch de entrenamiento) sigue aumentando, después de un número determinado de epochs, (para nuestro ejemplo 10 épocas). En este caso el modelo generado es **modelearlyst.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo.
+Way number 1: Checking if the total reward accumulated during the whole period of 5 months (= 1 epoch of training) continues to increase, after a certain number of epochs, (for our example 10 epochs). In this case, the generated model is **modelearlyst.h5** and the **testing.py** file must be modified to load that model.
 
 ![EarlyS1](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/trainingearlys1.png)
 
-Se puede ver que la parada se ha realizado en la época 30. No necesitaríamos por tanto entrenar hasta las 100 épocas
+It can be seen that the stop was made in epoch 30. Therefore we would not need to train until 100 epochs
 
-Este sería el resultado en test:
+This would be the result in test:
 
 ![TestEarlyS1](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTestEarlys1.png)
 
-Se puede ver que el resultado es incluso mejor que el anterior y conseguimos un ahorro de un **57%**
+You can see that the result is even better than the previous one and we achieved a saving of **57%**
 
 
 
 **training_earlystopping2.py**
 
-Forma número 2: Comprobando si la pérdida se sigue reduciendo, al menos en un porcentaje elegido, a lo largo de las epochs (en mi ejemplo un 5%). En este caso el modelo generado es **modelearlyst2.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo.
+Way number 2: Checking if the loss continues to decrease, at least by a chosen percentage, throughout the epochs (in my example 5%). In this case, the generated model is **modelearlyst2.h5** and the **testing.py** file must be modified to load that model.
 
 ![EarlyS1](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/trainingearlys2.png)
 
-Se puede ver que la parada se ha realizado en la época 31. No necesitaríamos por tanto entrenar hasta las 100 épocas
+It can be seen that the stop was made at epoch 31. Therefore we would not need to train until 100 epochs
 
-Este sería el resultado en test:
+This would be the result in test:
 
 ![TestEarlyS2](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTestEarlys2.png)
 
-Se puede ver que el resultado es parecido al que conseguimos la fórmula anterior, un ahorro de un **55%**
+You can see that the result is similar to the one obtained in the previous formula, a saving of **55%**
 
 #### Dropout
 
 **training_earlystopping1_dropout.py**
 
-Voy a realizar una prueba con un segundo brain llamado **new_brain.py** donde se hace uso de la técnica **Dropout**. Utilizaré también la primera forma de parada temprana. El modelo que genero se llama **modelearlyst_dropout.h5** y se debe modificar el fichero **testing.py** para cargar ese modelo. 
-Dejando 10 épocas para la parada temprana ésta se produce en la época 23 y se consigue un ahorro del 25%. Para conseguir un mejor resultado he aumentado el número de épocas de espera de la parada temprana a 20 con lo que la parada la tengo en la época 33
+I'm going to do a test with a second brain called **new_brain.py** where the ** Dropout ** technique is used. I will also use the first form of early stop. The model I generate is called **modelearlyst_dropout.h5** and the file **testing.py** must be modified to load that model.
+Leaving 10 times for the early stop, this occurs at time 23 and a 25% saving is achieved. To achieve a better result, I have increased the number of waiting times for the early stop to 20, so I have the stop at time 33
 
-Este sería el resultado en test:
+This would be the result in test:
 
 ![TestEarlyS1Dropout](https://raw.githubusercontent.com/mcpade/MinimizacionCostes_IA/master/images/ResultadoTestEarlys1_Dropout.png)
 
-
-Consigo un **79%** que es un resultado muy bueno de ahorro de energía.
+I get a **79%** which is a very good energy saving result.
 
 
 
